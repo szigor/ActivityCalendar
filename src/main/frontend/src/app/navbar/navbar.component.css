@@ -1,0 +1,8 @@
+button[aria-label="Close"] {
+  border: none;
+  background: none;
+}
+
+.ng-dirty:not(:valid, form) {
+  border: solid lightcoral;
+}

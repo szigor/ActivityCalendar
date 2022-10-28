@@ -1,0 +1,134 @@
+<section class="day-section">
+    <div class="year text-center mb-4">
+        <h1>
+            {{formatThisDateYear(dateNow)}}
+        </h1>
+    </div>
+    <div class="container">
+        <div class="row row-cols-4">
+            <div class="col mx-auto" *ngFor="let day of week1">
+                <div class="card card-small mb-4">
+                    <div class="day-info text-center bg-light border border-dark rounded-top">
+                        <h1>{{formatThisDateDay(day)}}</h1>
+                        <h3>{{getMonthName(day)}}</h3>
+                        <p class="text-danger" *ngIf="isDayWeekend(day); else notWeekend">{{getDayName(day)}}</p>
+                        <ng-template #notWeekend>
+                            <p>{{getDayName(day)}}</p>
+                        </ng-template>
+                    </div>
+                    <div class="day-activities">
+                        <div *ngFor="let activity of activities">
+                            <div class="text-center mb-0 pb-0 mt-2" (click)="openActivity(activityModal, activity)"
+                                *ngIf="formatThisDate(activity.date) == formatThisDate(day)">
+                                <h5 class="activity-name m-0">
+                                    {{activity.name}}
+                                </h5>
+                                <p class="m-0">
+                                    {{activity.place}}
+                                </p>
+                                <p class="m-0">
+                                    {{formatThisDateHour(activity.date)}}
+                                </p>
+                                <div class="wrapper">
+                                    <ul>
+                                        <li *ngFor="let user of activity.participants">
+                                            {{user.userName}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row row-cols-4">
+            <div class="col mx-auto" *ngFor="let day of week2">
+                <div class="card card-small mb-4">
+                    <div class="day-info text-center bg-light border border-dark rounded-top">
+                        <h1>{{formatThisDateDay(day)}}</h1>
+                        <h3>{{getMonthName(day)}}</h3>
+                        <p class="text-danger" *ngIf="isDayWeekend(day); else notWeekend">{{getDayName(day)}}</p>
+                        <ng-template #notWeekend>
+                            <p>{{getDayName(day)}}</p>
+                        </ng-template>
+                    </div>
+                    <div class="day-activities">
+                        <div *ngFor="let activity of activities">
+                            <div class="text-center mb-0 pb-0 mt-2" (click)="openActivity(activityModal, activity)"
+                                *ngIf="formatThisDate(activity.date) == formatThisDate(day)">
+                                <h5 class="m-0">
+                                    {{activity.name}}
+                                </h5>
+                                <p class="m-0">
+                                    {{activity.place}}
+                                </p>
+                                <p class="m-0">
+                                    {{formatThisDateHour(activity.date)}}
+                                </p>
+                                <div class="wrapper">
+                                    <ul>
+                                        <li *ngFor="let user of activity.participants">
+                                            {{user.userName}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ng-template #activityModal let-modal>
+    <div class="modal-header p-1">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container text-center">
+            <h2 class="mb-4">{{activity.name}}</h2>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Place</th>
+                        <td>{{activity.place}}</td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <td>{{formatThisDateAll(activity.date)}}</td>
+                    </tr>
+                    <tr>
+                        <th>Participants ({{activity.participants.length}})</th>
+                        <td>
+                            <ol *ngFor="let user of activity.participants">
+                                {{user.userName}}
+                            </ol>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button *ngIf="!takePartBoolean" class="btn btn-outline-success" (click)="takePart()">Take part!</button>
+            <div *ngIf="takePartBoolean">
+                <form class="row" #f="ngForm" (ngSubmit)="!f.invalid && onSubmitAddUser(f, activity)">
+                    <div class="col-6">
+                        <input class="form-control" type="text" name="userName" placeholder="Username" required ngModel>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="email" name="email" placeholder="email"
+                            pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required ngModel>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button data-dismiss="modal" class="btn btn-outline-success">I'm taking part!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

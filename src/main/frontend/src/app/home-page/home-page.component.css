@@ -1,0 +1,28 @@
+button[aria-label="Close"] {
+  border: none;
+  background: none;
+}
+
+.wrapper {
+  text-align: center;
+  border-bottom: 1px solid lightgrey;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.wrapper ul {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  zoom: 1;
+  *display: inline;
+}
+
+.wrapper li {
+  text-align: left;
+  padding: 2px 5px;
+}
+
+.ng-dirty:not(:valid, form) {
+  border: solid lightcoral;
+}
